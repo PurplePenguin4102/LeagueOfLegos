@@ -1,0 +1,49 @@
+﻿<Page
+    x:Class="LeagueOfLegos.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LeagueOfLegos"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <DataTemplate x:Key="LegendTemplate">
+            <Grid Height="120" Width="480" Margin="10" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border Background="{StaticResource ListViewItemPlaceholderBackgroundThemeBrush}" Width="120" Height="120">
+                    <Image Height="120" Width="120" Source="{Binding ThumbName}"/>
+                </Border>
+                <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                    <TextBlock Text="{Binding Name}" Style="{StaticResource TitleTextBlockStyle}" TextWrapping="NoWrap"/>
+                    <TextBlock Text="{Binding Title}" Style="{StaticResource CaptionTextBlockStyle}"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+    <Page.DataContext>
+        <local:MainPageModel/>
+    </Page.DataContext>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="320"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <ListView x:Name="listView" ItemTemplate="{StaticResource LegendTemplate}" ItemsSource="{Binding characters}" Grid.Row="1" SelectedItem="{Binding SelectedLegend, Mode=TwoWay}"/>
+            <TextBox x:Name="textBox" TextWrapping="Wrap" PlaceholderText="Choose your legend..." FontSize="16" Margin="10,0,10,10" BorderBrush="White" Text="{Binding Filter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Image x:Name="imageView" Source="{Binding ImageURI}" HorizontalAlignment="Left" Margin="170,0,0,0" Width="308" Height="560" VerticalAlignment="Center"/>
+            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="{Binding LegendName}" VerticalAlignment="Top"/>
+        </Grid>
+
+    </Grid>
+</Page>
